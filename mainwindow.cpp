@@ -7,6 +7,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     ui->stackedWidget->setCurrentIndex(0);
+    ui->lineEdit_Username->setText("");
+    ui->lineEdit_Password->setText("");
+    ui->lineEdit_Username_mdp_oublie->setText("");
     ui->tableViewUP->setModel(L.Afficher());
 }
 
@@ -103,6 +106,9 @@ void MainWindow::on_pushButtonRetour_clicked()
 void MainWindow::on_pushButtonRetourMPrincipale_clicked()
 {
     ui->stackedWidget->setCurrentIndex(0);
+    ui->lineEdit_Username->setText("");
+    ui->lineEdit_Password->setText("");
+    ui->lineEdit_Username_mdp_oublie->setText("");
 }
 
 void MainWindow::on_pushButtonmdpoubliee_clicked()
@@ -128,14 +134,18 @@ void MainWindow::on_pushButtonmdpoubliee_clicked()
 
         if (counter==1)
         {
-        Mailing* mailing = new Mailing("testkhouini@gmail.com", "Trunks@2001", "smtp.gmail.com", 465);
-        QString Subject = "Récupération mot de passe";
-        QString Message = "Mr " + username + " Votre mot de passe est " + password ;
-        mailing->sendMail("testkhouini@gmail.com", email, Subject ,Message);
-        QMessageBox::information(nullptr, QObject::tr("Database Open"),
-                                  QObject::tr("Mail enovoyé"),
-                                  QMessageBox::Ok
-                                  );
+            QMessageBox::information(nullptr, QObject::tr("Database Open"),
+                                      QObject::tr("Le compte existe"),
+                                      QMessageBox::Ok
+                                      );
+            Mailing* mailing = new Mailing("testkhouini@gmail.com", "Trunks@2001", "smtp.gmail.com", 465);
+            QString Subject = "Récupération mot de passe";
+            QString Message = "Mr " + username + " Votre mot de passe est " + password ;
+            mailing->sendMail("testkhouini@gmail.com", email, Subject ,Message);
+            QMessageBox::information(nullptr, QObject::tr("Database Open"),
+                                      QObject::tr("Mail enovoyé"),
+                                      QMessageBox::Ok
+                                      );
         }
         if (counter >1)
             QMessageBox::critical(this, tr("Error::"), "Duplicate");
